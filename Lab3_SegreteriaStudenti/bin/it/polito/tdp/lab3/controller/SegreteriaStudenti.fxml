@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.lab3.controller.SegreteriaStudentiController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="it.polito.tdp.lab3.controller.SegreteriaStudentiController">
+   <top>
+      <Label lineSpacing="10.0" text="Lab3_SegreteriaStudenti" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </Label>
+   </top>
+   <center>
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="10.0">
+               <children>
+                  <Label text="Corso:" />
+                  <ComboBox fx:id="boxcorso" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox spacing="6.0">
+               <children>
+                  <Label text="Studente: " />
+                  <TextField fx:id="lblmatricola" />
+                  <ImageView fx:id="btncomplete" fitHeight="37.0" fitWidth="36.0" onMouseClicked="#doComplete" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../../../Desktop/th.jpg" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="lblnome" editable="false" />
+                  <TextField fx:id="lblcognome" editable="false" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" spacing="10.0">
+               <children>
+                  <Button fx:id="btnCerca" mnemonicParsing="false" onAction="#doCerca" text="Cerca" />
+                  <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" text="Iscrivi" />
+               </children>
+            </HBox>
+            <TextArea fx:id="txtResult" editable="false" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <Button fx:id="btnReset" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#doReset" text="Reset" BorderPane.alignment="CENTER_RIGHT" />
+   </bottom>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </BorderPane>
