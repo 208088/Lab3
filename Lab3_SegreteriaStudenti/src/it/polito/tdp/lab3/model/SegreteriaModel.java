@@ -29,4 +29,25 @@ public class SegreteriaModel {
 		List<Corso> corsi=s.corsiFrequentati(t);
 		return corsi;
 	}
+
+	public Studente studenteInCorso(int matricola, String b) {
+		CorsoDAO s=new CorsoDAO();
+		return s.studenteInCorso(matricola, b);
+	}
+
+	public boolean inserisci(int m, String value) {
+		IscrizioneDAO is= new IscrizioneDAO();
+		StudenteDAO d= new StudenteDAO();
+		Studente studente=d.getStudente(m);
+		if(studente==null) 
+			return false;
+		for (Studente s : this.getIscritti(value)) {
+			if(m==s.getMatricola())return false;
+		}
+		CorsoDAO co= new CorsoDAO();
+		Corso c= co.getCorso(value);
+		if (c==null) 
+			return false;
+		return is.addIscrizione(studente, c);
+	}
 }

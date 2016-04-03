@@ -56,7 +56,10 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCerca(ActionEvent event) {
-    	if(boxcorso.getValue().compareTo("")==0 && !lblmatricola.getText().isEmpty()){
+    	String b=boxcorso.getValue();
+    	if(( b==null || b.compareTo("")==0 )	&& !lblmatricola.getText().isEmpty()){
+    		lblnome.setText("");
+        	lblcognome.setText("");
     		List<Corso> frequenta= segreteria.corsiFrequentati(lblmatricola.getText());
     		txtResult.clear();
     		for (Corso c : frequenta) {
@@ -64,13 +67,14 @@ public class SegreteriaStudentiController {
 			}
     		
     	}
-    	else{
+    	else if(b!=null && lblmatricola.getText().isEmpty()){
+    	txtResult.clear();
     	lblmatricola.setText("");
     	lblnome.setText("");
     	lblcognome.setText("");
     	String nome=boxcorso.getValue();
     	if(nome.compareTo("")!=0){
-    	List<Studente> stu= segreteria.getIscritti(boxcorso.getValue());
+    	List<Studente> stu= segreteria.getIscritti(b);
     	for (Studente s : stu) {
 			txtResult.setText(txtResult.getText()+"\n"+s.getMatricola()+" "+s.getCognome()+" "+s.getNome());
 		 }
@@ -85,22 +89,40 @@ public class SegreteriaStudentiController {
 			}
     	}
     	}
-
+    	else if(b!=null && b.compareTo("")!=0 && !lblmatricola.getText().isEmpty()){
+    		Studente s=segreteria.studenteInCorso(Integer.parseInt(lblmatricola.getText()), b);
+    	if (s!=null){
+    		txtResult.setText(""+s.getCognome()+" "+s.getNome()+" ("+s.getMatricola()+") e' iscritto al corso: '"+b+"'.");
+    	}
+    	else {
+    		Studente st=segreteria.getStudente(Integer.parseInt(lblmatricola.getText()));
+    		txtResult.setText(""+st.getCognome()+" "+st.getNome()+" ("+st.getMatricola()+") non e' iscritto al corso: '"+b+"'.");}
+    	}
     }
 
     @FXML
     void doComplete(MouseEvent event) {
+    	if(lblmatricola.getText().compareTo("")!=0){
     	Studente s= segreteria.getStudente(Integer.parseInt(lblmatricola.getText()));
     	if(s!=null){
     		lblnome.setText(s.getNome());
     		lblcognome.setText(s.getCognome());
     	}
     	else lblnome.setText(""+Integer.parseInt(lblmatricola.getText()));
+    	}
+    	else lblnome.setText("inserire una matricola");
     }
 
     @FXML
     void doIscrivi(ActionEvent event) {
-
+    	String corso=boxcorso.getValue();
+    	if(lblmatricola.getText().compareTo("")==0 || (corso==null || corso.compareTo("")==0)) return;
+    	int matricola=Integer.parseInt(lblmatricola.getText());
+    	Studente stu=segreteria.getStudente(matricola);
+    	if(stu==null) return;
+    	boolean fatto=segreteria.inserisci(matricola, corso);
+    	if(fatto) txtResult.setText("Lo studente"+stu.getCognome()+" "+stu.getNome()+ " ("+matricola+") e' stato iscritto al corso di "+corso);
+    	else txtResult.setText(""+stu.getCognome()+" "+stu.getNome()+" ("+matricola+") non e' stato inserito nel corso");
     }
 
     @FXML

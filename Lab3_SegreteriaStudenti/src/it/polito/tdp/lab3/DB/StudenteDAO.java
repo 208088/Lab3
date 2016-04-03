@@ -69,9 +69,9 @@ public List<Corso> corsiFrequentati(String t) {
 		List<Corso> corsi= new ArrayList<Corso>();
 		Connection conn=DriverManager.getConnection(jdbcURL);
 		Statement st= conn.createStatement();
-		String sql="select c.codins, c.crediti, c.nome, c.pd from corso c, studente s, iscrizione i where c.codins=i.codins && i.matricola=s.matricola && s.matricola=198457";
+		String sql="select c.codins, c.crediti, c.nome, c.pd from corso c, studente s, iscrizione i where c.codins=i.codins && i.matricola=s.matricola && s.matricola=\""+t+"\"";
 		ResultSet res= st.executeQuery(sql);
-		if(res.next()){
+		while(res.next()){
 			corsi.add(new Corso(res.getString("codins"), Integer.parseInt(res.getString("crediti")), res.getString("nome"), Integer.parseInt(res.getString("pd"))));
 		}
 		res.close();

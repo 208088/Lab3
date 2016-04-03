@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import it.polito.tdp.lab3.model.Corso;
+import it.polito.tdp.lab3.model.Studente;
+
 import java.sql.Connection;
 
 public class IscrizioneDAO {
@@ -30,6 +33,24 @@ public class IscrizioneDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean addIscrizione(Studente m, Corso value) {
+		try {
+			Connection conn= DriverManager.getConnection(jdbcURL);
+			Statement st= conn.createStatement();
+			String sql="insert into iscrizione values (\""+m.getMatricola()+"\", \""+value.getId()+"\")";
+			int ret=st.executeUpdate(sql);
+			conn.close();
+			if (ret==1) 
+				return true;
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }
